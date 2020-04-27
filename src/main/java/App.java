@@ -1,3 +1,5 @@
+import process.Simulation;
+
 public class App {
     public static void main(String[] args) {
         Simulation pv = new Simulation();
@@ -8,6 +10,12 @@ public class App {
 
         pv.generatePersonsOnField();
         pv.printAllFieldsWithPersonOnIt();
+
+        pv.plantVirus();
+        pv.plantVirus();
+        pv.plantVirus();
+        pv.plantVirus();
+        pv.printAllFieldsWithInfectedPersonOnIt();
 
     }
 

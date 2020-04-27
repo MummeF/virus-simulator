@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static process.ConfigLib.PROBABILITY_OF_INFECTION_ON_FIELD;
+
 @Data
 public class Field {
     private int x = -1;
     private int y = -1;
+    private boolean accessible;
     private List<Person> persons;
 
     @Builder
@@ -22,6 +25,18 @@ public class Field {
 
     public void addPerson(Person toAdd) {
         this.persons.add(toAdd);
+    }
+
+    public List<Person> decline(){
+        if(this.persons.isEmpty()) {
+            this.accessible = false;
+            return null;
+        }else{
+            List<Person> tmp = this.persons;
+            this.persons = new ArrayList<>();
+            this.accessible = false;
+            return tmp;
+        }
     }
 
     public boolean removePersonByIdentifier(int ident) {
@@ -41,6 +56,19 @@ public class Field {
 
     public boolean removePerson(Person toRem) {
         return this.persons.remove(toRem);
+    }
+
+    public void process(){
+        boolean anyInfectedPersonOnField = this.persons.stream()
+                .anyMatch(Person::isInfected);
+        if(anyInfectedPersonOnField) {
+            for (Person person : this.persons) {
+                if(Math.random() < PROBABILITY_OF_INFECTION_ON_FIELD){
+                    person.infect();
+                }
+            }
+        }
+        persons.forEach(Person::process);
     }
 
     @Override

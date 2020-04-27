@@ -4,8 +4,10 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import process.time.TimeLine;
+import process.time.Timestamp;
 
-import java.util.Optional;
+import static process.ConfigLib.*;
 
 @Data
 public class Person {
@@ -17,12 +19,14 @@ public class Person {
     private int ident;
 
     //Infiziertenstatus
-    private static int RISK_AGE = 65;
 
     private boolean alive = true;
     private boolean immune = false;
     private boolean infected = false;
-    private Optional<Integer> timeTilHealthy;
+    private double riskFactor = initRiskFactor();
+
+
+    private Timestamp timeOfInfection;
 
     //Persönliche Daten
     private int age;
@@ -50,6 +54,32 @@ public class Person {
 
     public boolean riskGroup() {
         return age > RISK_AGE;
+    }
+
+    private double initRiskFactor() {
+        return (riskGroup() ? LETHALITY_PLUS_FOR_RISK_AGE : 0) + LETHALITY;
+    }
+
+    public void infect() {
+        this.infected = true;
+        this.timeOfInfection = TimeLine.getAktTimeStamp();
+    }
+
+    public void process() {
+        if (infected) {
+            if (!timeOfInfection.isStillInfected()) {
+                this.infected = false;
+                this.immune = true;
+            } else {
+                if (timeOfInfection.isIncubationTimeOver()) {
+                    if(Math.random() < riskFactor){
+                        this.infected = false;
+                        this.immune = false;
+                        this.alive = false;
+                    }
+                }
+            }
+        }
     }
 
     @Override
