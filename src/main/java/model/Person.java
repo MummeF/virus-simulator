@@ -73,7 +73,7 @@ public class Person {
                 this.infected = false;
                 this.immune = true;
             } else {
-                if (timeOfInfection.isIncubationTimeOver()) {
+                if (!timeOfInfection.isIncubationTimeOver()) {
                     if (Math.random() < riskFactor) {
                         this.infected = false;
                         this.immune = false;

@@ -79,7 +79,7 @@ public class Field {
     public String toString() {
         String personString = "[" + this.persons.stream()
                 .map(Person::toString)
-                .collect(Collectors.joining(","))
+                .collect(Collectors.joining(",\n"))
                 + "]";
         personString.replaceAll("\n", "\n\t");
         return String.format("Field [%d | %d] {\n\tpersons: %s\n}",

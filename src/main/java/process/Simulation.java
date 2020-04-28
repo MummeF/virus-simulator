@@ -1,6 +1,8 @@
 package process;
 
+import Gui.MapPanel;
 import lombok.Data;
+import lombok.Getter;
 import model.Field;
 import model.Move;
 import model.Person;
@@ -8,6 +10,7 @@ import process.time.TimeLine;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -15,11 +18,14 @@ import static process.ConfigLib.*;
 
 @Data
 public class Simulation {
-//    private Gui gui;
+    //    private Gui gui;
+    private static MapPanel mapPanel;
 
 
-    private List<Field> fields = generateFields(MAX_X, MAX_Y);
-    private List<Person> deads = new ArrayList<>();
+    @Getter
+    private static List<Field> fields = generateFields(MAX_X, MAX_Y);
+    @Getter
+    private static List<Person> deads = new ArrayList<>();
 
     public Simulation() {
 //        this.gui = gui;
@@ -27,31 +33,46 @@ public class Simulation {
         this.plantVirus();
     }
 
-    public int getInfectedCount(){
+    public static void init(MapPanel panel) {
+        mapPanel = panel;
+        generatePersonsOnField();
+        plantVirus();
+    }
+
+    public static int getInfectedCount() {
         AtomicInteger counter = new AtomicInteger(0);
-        this.fields.stream()
+        fields.stream()
                 .forEach(field -> field.getPersons().stream()
-                .filter(Person::isInfected)
-                .forEach(person -> counter.getAndIncrement()));
+                        .filter(Person::isInfected)
+                        .forEach(person -> counter.getAndIncrement()));
         return counter.get();
     }
 
-    public void generatePersonsOnField() {
-        this.fields.forEach(field -> {
-            while (Math.random() < 0.3) {
+    public static int getImmuneCount() {
+        AtomicInteger counter = new AtomicInteger(0);
+        fields.stream()
+                .forEach(field -> field.getPersons().stream()
+                        .filter(Person::isImmune)
+                        .forEach(person -> counter.getAndIncrement()));
+        return counter.get();
+    }
+
+    private static void generatePersonsOnField() {
+        fields.forEach(field -> {
+            while (Math.random() < POPULATION_DENSITY) {
                 field.addPerson(new Person());
             }
         });
     }
 
-    public void printAllFieldsWithPersonOnIt() {
-        this.fields.stream()
+    public static void printAllFieldsWithPersonOnIt() {
+        fields.stream()
                 .filter(field -> field.getPersons().size() > 0)
                 .forEach(field -> System.out.println(field.toString()));
     }
 
-    public void printAllFieldsWithInfectedPersonOnIt() {
-        this.fields.stream()
+    public static void printAllFieldsWithInfectedPersonOnIt() {
+        fields.stream()
                 .filter(field -> field.getPersons().size() > 0)
                 .filter(field ->
                         field.getPersons().stream()
@@ -60,10 +81,10 @@ public class Simulation {
                 .forEach(field -> System.out.println(field.toString()));
     }
 
-    public void plantVirus() {
+    private static void plantVirus() {
         AtomicInteger planted = new AtomicInteger(0);
         while (planted.get() == 0) {
-            this.fields.stream()
+            fields.stream()
                     .flatMap(field -> field.getPersons().stream())
                     .forEach(person -> {
                         if (planted.get() == 0 && Math.random() < 0.01) {
@@ -76,7 +97,7 @@ public class Simulation {
         }
     }
 
-    private ArrayList<Field> generateFields(int maxX, int maxY) {
+    private static ArrayList<Field> generateFields(int maxX, int maxY) {
         ArrayList<Field> generated = new ArrayList<>();
         for (int x = 0; x < maxX; x++) {
             for (int y = 0; y < maxY; y++) {
@@ -89,7 +110,7 @@ public class Simulation {
         return generated;
     }
 
-    public int getNextMovableField(int x, int y) {
+    private static int getNextMovableField(int x, int y) {
         if (checkXAndY(x, y)) {
             List<Integer> possibleDirections = new ArrayList<>();
             if (checkFieldAccessible(x + 1, y)) {
@@ -123,17 +144,17 @@ public class Simulation {
         return -1;
     }
 
-    public boolean checkFieldAccessible(int x, int y) {
+    private static boolean checkFieldAccessible(int x, int y) {
         if (checkXAndY(x, y)) {
-            return this.fields.get(getFieldOn(x, y)).isAccessible();
+            return fields.get(getFieldOn(x, y)).isAccessible();
         }
         return false;
     }
 
-    public int getFieldOn(int x, int y) {
+    private static int getFieldOn(int x, int y) {
         if (checkXAndY(x, y)) {
-            for (int i = 0; i < this.fields.size(); i++) {
-                Field field = this.fields.get(i);
+            for (int i = 0; i < fields.size(); i++) {
+                Field field = fields.get(i);
                 if (field.getX() == x && field.getY() == y) {
                     return i;
                 }
@@ -142,22 +163,22 @@ public class Simulation {
         return -1;
     }
 
-    public boolean checkXAndY(int x, int y) {
+    private static boolean checkXAndY(int x, int y) {
         return (x >= 0 && x < MAX_X && y >= 0 && y < MAX_Y);
     }
 
-    public void declineField(int x, int y) {
+    public static void declineField(int x, int y) {
         if (checkXAndY(x, y)) {
-            List<Person> toMove = this.fields.get(getFieldOn(x, y)).decline();
+            List<Person> toMove = fields.get(getFieldOn(x, y)).decline();
             toMove.forEach(person ->
-                    this.fields.get(getNextMovableField(x, y)).addPerson(person)
+                    fields.get(getNextMovableField(x, y)).addPerson(person)
             );
         }
     }
 
-    public void allowField(int x, int y) {
+    public static void allowField(int x, int y) {
         if (checkXAndY(x, y)) {
-            this.fields.get(getFieldOn(x, y)).allow();
+            fields.get(getFieldOn(x, y)).allow();
         }
     }
 
@@ -170,9 +191,9 @@ public class Simulation {
         }
     }
 
-    private void moveAllPersons() {
+    private static void moveAllPersons() {
         List<Move> moves = new ArrayList<>();
-        this.fields
+        fields
                 .forEach(field ->
                         field.getPersons().forEach(person -> {
                             if (Math.random() < MOVABILITY) {
@@ -185,13 +206,13 @@ public class Simulation {
                         })
                 );
         moves.forEach(move -> {
-            this.fields.get(move.getFromIndex()).removePerson(move.getPerson());
-            this.fields.get(move.getToIndex()).addPerson(move.getPerson());
+            fields.get(move.getFromIndex()).removePerson(move.getPerson());
+            fields.get(move.getToIndex()).addPerson(move.getPerson());
         });
     }
 
-    public void process() {
-        this.moveAllPersons();
+    private static void process() {
+        moveAllPersons();
         TimeLine.processTime();
         fields.forEach(Field::process);
         fields.forEach(field -> {
@@ -203,34 +224,29 @@ public class Simulation {
         });
     }
 
-    public void run() {
-        boolean systemRunning = true;
-//        if (this.gui != null) {
-//            gui.updateSimulation();
-//        }
+    public static void run() {
+        AtomicBoolean systemRunning = new AtomicBoolean(true);
         printAllFieldsWithInfectedPersonOnIt();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (systemRunning) {
-                    //..........
+        new Thread(() -> {
+            synchronized (mapPanel) {
+                while (systemRunning.get()) {
                     try {
                         Thread.sleep(TIME_SPEED);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     process();
-            printAllFieldsWithInfectedPersonOnIt();
+                    mapPanel.updateSimulation();
+                    printAllFieldsWithInfectedPersonOnIt();
                     System.out.println(TimeLine.getAktTimeStamp());
-//                    if (gui != null) {
-////                        gui.updateSimulation();
-////                    }
+                    if (getInfectedCount() == 0) {
+                        systemRunning.set(false);
+                        System.out.println("VIRUS BESIEGT!! Anzahl an Toten: " + getDeads().size()
+                                + ", Anzahl an Genesenen: " + getImmuneCount());
+                    }
                 }
                 System.exit(0);
             }
         }).start();
-
-
-
     }
 }
