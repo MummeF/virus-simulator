@@ -1,6 +1,6 @@
 package process;
 
-import Gui.MapPanel;
+import Gui.Map.MapPanel;
 import lombok.Data;
 import lombok.Getter;
 import model.Field;
@@ -245,7 +245,7 @@ public class Simulation {
                                 + ", Anzahl an Genesenen: " + getImmuneCount());
                     }
                 }
-                System.exit(0);
+//                System.exit(0);
             }
         }).start();
     }

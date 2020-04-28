@@ -75,6 +75,13 @@ public class Field {
         persons.forEach(Person::process);
     }
 
+    public boolean anyInfectedPersonOnIt(){
+        return this.persons.stream().anyMatch(Person::isInfected);
+    }
+    public boolean anyImmunePersonOnIt(){
+        return this.persons.stream().anyMatch(Person::isImmune);
+    }
+
     @Override
     public String toString() {
         String personString = "[" + this.persons.stream()
