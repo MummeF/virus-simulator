@@ -1,27 +1,25 @@
+
 import process.Simulation;
+
+import javax.swing.*;
 
 public class App {
     public static void main(String[] args) {
-        Simulation pv = new Simulation();
-//        pv.generateRandomPersons(20);
-//        pv.printAllPersons();
-//        printMessageAsHeader("Volljaehrig");
-//        pv.printAllPersonsOver18();
-
-        pv.generatePersonsOnField();
-        pv.printAllFieldsWithPersonOnIt();
-
-        pv.plantVirus();
-        pv.plantVirus();
-        pv.plantVirus();
-        pv.plantVirus();
-        pv.printAllFieldsWithInfectedPersonOnIt();
+//        SwingUtilities.invokeLater(() -> createAndShowGui());
+        Simulation s = new Simulation();
+        s.run();
 
     }
-
-    private static void printMessageAsHeader(String message) {
-        System.out.println("===================================================\n" +
-                message +
-                "\n===================================================");
-    }
+//
+//    private static void createAndShowGui(){
+//        Gui gui = new Gui(900,900);
+//        JFrame frame = new JFrame("Virus-Simulator");
+//        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//        frame.setLayout(null);
+//        frame.setSize(900,900);
+//        frame.getContentPane().add(gui);
+//        frame.setLocationByPlatform(true);
+//        frame.setVisible(true);
+//
+//    }
 }

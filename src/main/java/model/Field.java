@@ -13,7 +13,7 @@ import static process.ConfigLib.PROBABILITY_OF_INFECTION_ON_FIELD;
 public class Field {
     private int x = -1;
     private int y = -1;
-    private boolean accessible;
+    private boolean accessible = true;
     private List<Person> persons;
 
     @Builder
@@ -37,6 +37,10 @@ public class Field {
             this.accessible = false;
             return tmp;
         }
+    }
+
+    public void allow(){
+        this.accessible = true;
     }
 
     public boolean removePersonByIdentifier(int ident) {

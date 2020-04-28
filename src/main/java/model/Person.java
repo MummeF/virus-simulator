@@ -61,8 +61,10 @@ public class Person {
     }
 
     public void infect() {
-        this.infected = true;
-        this.timeOfInfection = TimeLine.getAktTimeStamp();
+        if (!infected && !immune) {
+            this.infected = true;
+            this.timeOfInfection = TimeLine.getAktTimeStamp();
+        }
     }
 
     public void process() {
@@ -72,10 +74,11 @@ public class Person {
                 this.immune = true;
             } else {
                 if (timeOfInfection.isIncubationTimeOver()) {
-                    if(Math.random() < riskFactor){
+                    if (Math.random() < riskFactor) {
                         this.infected = false;
                         this.immune = false;
                         this.alive = false;
+                        System.out.println(this.toString() + " ist gestorben!!!!!!!!!!!!!!!!!!!!!!!");
                     }
                 }
             }
@@ -84,7 +87,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return String.format("Person %d{\n\tage: %d\n\tname: %s\n\tsex: %s\n\trisk group: %b\n\timmune: %b\n\tinfected: %b\n}",
-                this.ident, this.age, this.name, this.getSex(), this.riskGroup(), this.immune, this.infected);
+        return String.format("Person %d{\n\tage: %d\n\tname: %s\n\tsex: %s\n\trisk group: %b\n\timmune: %b\n\tinfected: %b\n\tinfection time: %s\n}",
+                this.ident, this.age, this.name, this.getSex(), this.riskGroup(), this.immune, this.infected, this.timeOfInfection);
     }
 }

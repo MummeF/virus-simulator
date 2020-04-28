@@ -11,16 +11,20 @@ import static process.ConfigLib.INCUBATION_TIME;
 public class Timestamp {
     private long time;
 
-    public boolean isOutOfTimeRange(Timestamp otherTimeStamp, long range){
-        return Math.abs(otherTimeStamp.getTime() - time) > Math.abs(range);
+    public boolean isOutOfTimeRange(Timestamp otherTimeStamp, long range) {
+        return Math.abs(otherTimeStamp.getTime() - time) <= Math.abs(range);
     }
 
-    public boolean isStillInfected(){
+    public boolean isStillInfected() {
         return this.isOutOfTimeRange(TimeLine.getAktTimeStamp(), INCUBATION_TIME + ILLNESS_DURATION);
     }
 
-    public boolean isIncubationTimeOver(){
+    public boolean isIncubationTimeOver() {
         return this.isOutOfTimeRange(TimeLine.getAktTimeStamp(), INCUBATION_TIME);
     }
 
+    @Override
+    public String toString() {
+        return this.time + "";
+    }
 }

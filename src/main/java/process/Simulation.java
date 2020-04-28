@@ -2,7 +2,9 @@ package process;
 
 import lombok.Data;
 import model.Field;
+import model.Move;
 import model.Person;
+import process.time.TimeLine;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +15,26 @@ import static process.ConfigLib.*;
 
 @Data
 public class Simulation {
+//    private Gui gui;
+
+
     private List<Field> fields = generateFields(MAX_X, MAX_Y);
     private List<Person> deads = new ArrayList<>();
+
+    public Simulation() {
+//        this.gui = gui;
+        this.generatePersonsOnField();
+        this.plantVirus();
+    }
+
+    public int getInfectedCount(){
+        AtomicInteger counter = new AtomicInteger(0);
+        this.fields.stream()
+                .forEach(field -> field.getPersons().stream()
+                .filter(Person::isInfected)
+                .forEach(person -> counter.getAndIncrement()));
+        return counter.get();
+    }
 
     public void generatePersonsOnField() {
         this.fields.forEach(field -> {
@@ -47,7 +67,7 @@ public class Simulation {
                     .flatMap(field -> field.getPersons().stream())
                     .forEach(person -> {
                         if (planted.get() == 0 && Math.random() < 0.01) {
-                            person.setInfected(true);
+                            person.infect();
                             person.setName("Lee Yu");
                             planted.set(1);
                             return;
@@ -69,16 +89,19 @@ public class Simulation {
         return generated;
     }
 
-    public Field getNextMovableField(int x, int y) {
+    public int getNextMovableField(int x, int y) {
         if (checkXAndY(x, y)) {
             List<Integer> possibleDirections = new ArrayList<>();
-            if (checkFieldAccessible(x++, y)) {
+            if (checkFieldAccessible(x + 1, y)) {
                 possibleDirections.add(0);
-            } else if (checkFieldAccessible(x, y++)) {
+            }
+            if (checkFieldAccessible(x, y + 1)) {
                 possibleDirections.add(1);
-            } else if (checkFieldAccessible(x--, y)) {
+            }
+            if (checkFieldAccessible(x - 1, y)) {
                 possibleDirections.add(2);
-            } else if (checkFieldAccessible(x, y--)) {
+            }
+            if (checkFieldAccessible(x, y - 1)) {
                 possibleDirections.add(3);
             }
             if (possibleDirections.isEmpty()) {
@@ -87,51 +110,54 @@ public class Simulation {
                 int directionNo = (int) (Math.random() * possibleDirections.size());
                 switch (possibleDirections.get(directionNo)) {
                     case 0:
-                        return getFieldOn(x++, y);
+                        return getFieldOn(x + 1, y);
                     case 1:
-                        return getFieldOn(x, y++);
+                        return getFieldOn(x, y + 1);
                     case 2:
-                        return getFieldOn(x--, y);
+                        return getFieldOn(x - 1, y);
                     case 3:
-                        return getFieldOn(x, y--);
+                        return getFieldOn(x, y - 1);
                 }
             }
         }
-        return null;
+        return -1;
     }
 
     public boolean checkFieldAccessible(int x, int y) {
         if (checkXAndY(x, y)) {
-            return getFieldOn(x, y).isAccessible();
+            return this.fields.get(getFieldOn(x, y)).isAccessible();
         }
         return false;
     }
 
-    public Field getFieldOn(int x, int y) {
+    public int getFieldOn(int x, int y) {
         if (checkXAndY(x, y)) {
-            return this.fields.stream()
-                    .filter(field -> field.getX() == x && field.getY() == y)
-                    .collect(Collectors.collectingAndThen(Collectors.toList(), list -> {
-                        if (list.isEmpty() || list.size() > 1) {
-                            return null;
-                        }
-                        return list.get(0);
-                    }));
+            for (int i = 0; i < this.fields.size(); i++) {
+                Field field = this.fields.get(i);
+                if (field.getX() == x && field.getY() == y) {
+                    return i;
+                }
+            }
         }
-        return null;
+        return -1;
     }
 
     public boolean checkXAndY(int x, int y) {
-        return (x >= 0 && x <= MAX_X && y >= 0 && y <= MAX_Y);
+        return (x >= 0 && x < MAX_X && y >= 0 && y < MAX_Y);
     }
 
     public void declineField(int x, int y) {
         if (checkXAndY(x, y)) {
-            Field toDecline = getFieldOn(x, y);
-            List<Person> toMove = toDecline.decline();
+            List<Person> toMove = this.fields.get(getFieldOn(x, y)).decline();
             toMove.forEach(person ->
-                    getNextMovableField(x, y).addPerson(person)
+                    this.fields.get(getNextMovableField(x, y)).addPerson(person)
             );
+        }
+    }
+
+    public void allowField(int x, int y) {
+        if (checkXAndY(x, y)) {
+            this.fields.get(getFieldOn(x, y)).allow();
         }
     }
 
@@ -144,24 +170,67 @@ public class Simulation {
         }
     }
 
+    private void moveAllPersons() {
+        List<Move> moves = new ArrayList<>();
+        this.fields
+                .forEach(field ->
+                        field.getPersons().forEach(person -> {
+                            if (Math.random() < MOVABILITY) {
+                                moves.add(Move.builder()
+                                        .person(person)
+                                        .fromIndex(getFieldOn(field.getX(), field.getY()))
+                                        .toIndex(getNextMovableField(field.getX(), field.getY()))
+                                        .build());
+                            }
+                        })
+                );
+        moves.forEach(move -> {
+            this.fields.get(move.getFromIndex()).removePerson(move.getPerson());
+            this.fields.get(move.getToIndex()).addPerson(move.getPerson());
+        });
+    }
+
     public void process() {
+        this.moveAllPersons();
+        TimeLine.processTime();
         fields.forEach(Field::process);
         fields.forEach(field -> {
             List<Person> deadsInProcess = field.getPersons().stream()
-                    .filter(Person::isAlive)
+                    .filter(person -> !person.isAlive())
                     .collect(Collectors.toList());
             deadsInProcess.forEach(person -> field.removePerson(person));
             deads.addAll(deadsInProcess);
         });
     }
 
-    public void run() throws InterruptedException {
+    public void run() {
         boolean systemRunning = true;
-        while (systemRunning) {
-            //..........
-            process();
-            Thread.sleep(TIME_SPEED);
-        }
-        System.exit(0);
+//        if (this.gui != null) {
+//            gui.updateSimulation();
+//        }
+        printAllFieldsWithInfectedPersonOnIt();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (systemRunning) {
+                    //..........
+                    try {
+                        Thread.sleep(TIME_SPEED);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    process();
+            printAllFieldsWithInfectedPersonOnIt();
+                    System.out.println(TimeLine.getAktTimeStamp());
+//                    if (gui != null) {
+////                        gui.updateSimulation();
+////                    }
+                }
+                System.exit(0);
+            }
+        }).start();
+
+
+
     }
 }
