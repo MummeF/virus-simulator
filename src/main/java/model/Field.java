@@ -30,7 +30,7 @@ public class Field {
     public List<Person> decline(){
         if(this.persons.isEmpty()) {
             this.accessible = false;
-            return null;
+            return new ArrayList<>();
         }else{
             List<Person> tmp = this.persons;
             this.persons = new ArrayList<>();

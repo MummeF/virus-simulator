@@ -185,8 +185,9 @@ public class Simulation {
     public void declineField(int fromX, int fromY, int toX, int toY) {
         if (checkXAndY(fromX, fromY) && checkXAndY(toX, toY)) {
             for (int x = fromX; (fromX < toX ? x < toX : x > toX); x += fromX < toX ? 1 : -1) {
-                for (int y = fromY; (fromY < toY ? y < toY : y > toY); y += fromY < toY ? 1 : -1)
+                for (int y = fromY; (fromY < toY ? y < toY : y > toY); y += fromY < toY ? 1 : -1) {
                     declineField(x, y);
+                }
             }
         }
     }
@@ -196,7 +197,7 @@ public class Simulation {
         fields
                 .forEach(field ->
                         field.getPersons().forEach(person -> {
-                            if (Math.random() < MOVABILITY) {
+                            if (Math.random() < MOBILITY) {
                                 moves.add(Move.builder()
                                         .person(person)
                                         .fromIndex(getFieldOn(field.getX(), field.getY()))
@@ -228,13 +229,10 @@ public class Simulation {
         AtomicBoolean systemRunning = new AtomicBoolean(true);
         printAllFieldsWithInfectedPersonOnIt();
         new Thread(() -> {
-            synchronized (mapPanel) {
-                while (systemRunning.get()) {
-                    try {
-                        Thread.sleep(TIME_SPEED);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            long systemTime = System.currentTimeMillis() - TIME_SPEED;
+            while (systemRunning.get()) {
+                if (systemTime + TIME_SPEED <= System.currentTimeMillis()) {
+                    systemTime = System.currentTimeMillis();
                     process();
                     mapPanel.updateSimulation();
                     printAllFieldsWithInfectedPersonOnIt();
@@ -245,8 +243,8 @@ public class Simulation {
                                 + ", Anzahl an Genesenen: " + getImmuneCount());
                     }
                 }
-//                System.exit(0);
             }
+//                System.exit(0);
         }).start();
     }
 }

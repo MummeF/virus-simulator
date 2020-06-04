@@ -1,9 +1,9 @@
 package Gui.Map;
 
+import model.Person;
 import process.Simulation;
 
 import javax.swing.*;
-
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +13,11 @@ import static process.ConfigLib.MAX_X;
 import static process.ConfigLib.MAX_Y;
 
 public class MapPanel extends JPanel {
-    private JLabel label;
     private List<GraphicField> fields = new ArrayList<>();
 
     public MapPanel() {
         super();
-        this.setLayout(new GridLayout(MAX_X, MAX_Y));
-//        label = new JLabel("Number of infected Persons: " + Simulation.getInfectedCount());
-//        this.add(label);
+        this.setLayout(new GridLayout(MAX_Y, MAX_X));
         generateFields();
     }
 
@@ -30,18 +27,15 @@ public class MapPanel extends JPanel {
             this.fields.get(i.get()).update(field);
             i.getAndIncrement();
         });
-//        label.setText("Number of infected Persons: " + Simulation.getInfectedCount());
+        this.revalidate();
+        this.repaint();
     }
 
     private void generateFields() {
-        Simulation.getFields().forEach(field ->{
+        Simulation.getFields().forEach(field -> {
             GraphicField graphicField = new GraphicField(field);
             this.fields.add(graphicField);
             this.add(graphicField);
         });
-    }
-
-    private void addLabel() {
-
     }
 }

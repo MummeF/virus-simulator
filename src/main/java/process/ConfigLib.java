@@ -6,7 +6,7 @@ public class ConfigLib {
 
     //FIELD CONFIG
     public static int MAX_X = 30, MAX_Y = 30;
-    public static double MOVABILITY = 1;
+    public static double MOBILITY = 0.8;
     public static double POPULATION_DENSITY = 0.4;
 
     //VIRUS CONFIG
@@ -17,6 +17,7 @@ public class ConfigLib {
 
 
     //TIME CONFIG
+//    public static int TIME_SPEED = 1000/24; //24 Hz
     public static int TIME_SPEED = 200;
     public static int TIME_SPEED_STEP = 1;
     public static TimeUnit TIME_UNIT = TimeUnit.Days;

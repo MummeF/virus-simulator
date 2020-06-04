@@ -10,6 +10,7 @@ public class Gui extends JFrame {
     public Gui(){
         super("Virus-Simulator");
         MapPanel mapPanel = new MapPanel();
+        this.setLayout(new GridLayout(1,2));
         Simulation.init(mapPanel);
         this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         this.setVisible(true);

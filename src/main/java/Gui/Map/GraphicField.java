@@ -2,6 +2,7 @@ package Gui.Map;
 
 import lombok.Data;
 import model.Field;
+import model.Person;
 import process.Simulation;
 
 import javax.swing.*;
@@ -10,75 +11,83 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 
 @Data
-public class GraphicField extends JTextField {
+public class GraphicField extends JPanel {
     private Field field;
 
 
     public GraphicField(Field field) {
-        super("" + field.getPersons().size());
-        if (field.isAccessible()) {
-            if (field.anyInfectedPersonOnIt()) {
-                this.setBackground(Color.red);
-            } else {
-                this.setBackground(Color.white);
-            }
-        } else {
-            this.setBackground(Color.gray);
-        }
         this.setVisible(true);
         this.setFocusable(false);
+        this.setLayout(null);
+//        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem decline = new JMenuItem("Decline");
         decline.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Simulation.declineField(field.getX(), field.getY());
+                decline();
             }
         });
         JMenuItem allow = new JMenuItem("Allow");
-        decline.addActionListener(new ActionListener() {
+        allow.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Simulation.allowField(field.getX(), field.getY());
+                allow();
             }
         });
         popupMenu.add(decline);
         popupMenu.add(allow);
-        SwingUtilities.invokeLater(() -> this.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        popupMenu.show(GraphicField.this, e.getX(), e.getY());
-                    }
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                popupMenu.show(GraphicField.this, e.getX(), e.getY());
+            }
+        });
+        update(field);
 
-                    @Override
-                    public void mousePressed(MouseEvent e) {
-                        popupMenu.show(GraphicField.this, e.getX(), e.getY());
-                    }
+    }
 
-                    @Override
-                    public void mouseReleased(MouseEvent e) {
-                        popupMenu.show(GraphicField.this, e.getX(), e.getY());
-                    }
-                })
-        );
+    private void decline() {
+        this.setBackground(Color.lightGray);
+        Simulation.declineField(field.getX(), field.getY());
+    }
 
+    private void allow() {
+        this.setBackground(Color.lightGray);
+        Simulation.allowField(field.getX(), field.getY());
     }
 
     public void update(Field field) {
         this.field = field;
         if (field.isAccessible()) {
-            if (field.anyInfectedPersonOnIt()) {
-                this.setBackground(Color.red);
-            } else {
-                this.setBackground(Color.white);
-            }
+           this.setBackground(Color.WHITE);
         } else {
             this.setBackground(Color.gray);
         }
-        this.setText("" + field.getPersons().size());
+        int personIndex = 0;
+        List<Person> persons = field.getPersons();
+        for (int i = 0; i < this.getComponents().length; i++) {
+            Component component = getComponent(i);
+            if (component instanceof GraphicPerson) {
+                if (personIndex < persons.size()) {
+                    ((GraphicPerson) getComponent(i)).update(persons.get(personIndex));
+                    personIndex++;
+                } else {
+                    this.remove(i);
+                }
+            }
+        }
+        while (personIndex < persons.size()) {
+            GraphicPerson toAdd = new GraphicPerson(persons.get(personIndex), 5, this.getWidth(), this.getHeight());
+            this.add(toAdd);
+            personIndex++;
+        }
+        this.revalidate();
+        this.repaint();
     }
 }
