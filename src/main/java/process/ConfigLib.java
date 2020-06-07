@@ -2,12 +2,17 @@ package process;
 
 import process.time.TimeUnit;
 
+import java.awt.*;
+
 public class ConfigLib {
 
     //FIELD CONFIG
-    public static int MAX_X = 30, MAX_Y = 30;
-    public static double MOBILITY = 0.8;
-    public static double POPULATION_DENSITY = 0.4;
+    public static int SIZE_FACTOR = 2;
+    private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static double screenFactor = screenSize.getWidth() / screenSize.getHeight();
+    public static int MAX_X = SIZE_FACTOR, MAX_Y = (int) (SIZE_FACTOR * screenFactor);
+    public static double MOBILITY = 0;
+    public static double POPULATION_DENSITY = 0.3;
 
     //VIRUS CONFIG
     public static int RISK_AGE = 65;
@@ -17,8 +22,8 @@ public class ConfigLib {
 
 
     //TIME CONFIG
-//    public static int TIME_SPEED = 1000/24; //24 Hz
-    public static int TIME_SPEED = 200;
+//    public static int TIME_SPEED = 1000 / 24; //24 Hz
+    public static int TIME_SPEED = 2000;
     public static int TIME_SPEED_STEP = 1;
     public static TimeUnit TIME_UNIT = TimeUnit.Days;
     public static long INCUBATION_TIME = 10;

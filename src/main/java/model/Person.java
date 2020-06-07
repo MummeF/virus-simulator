@@ -7,6 +7,8 @@ import lombok.Setter;
 import process.time.TimeLine;
 import process.time.Timestamp;
 
+import java.awt.*;
+
 import static process.ConfigLib.*;
 
 @Data
@@ -24,6 +26,10 @@ public class Person {
     private boolean immune = false;
     private boolean infected = false;
     private double riskFactor = initRiskFactor();
+
+    //move
+    private Move recentMove;
+    private Point recentPosition;
 
 
     private Timestamp timeOfInfection;

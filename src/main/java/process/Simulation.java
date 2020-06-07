@@ -8,6 +8,7 @@ import model.Move;
 import model.Person;
 import process.time.TimeLine;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -112,33 +113,16 @@ public class Simulation {
 
     private static int getNextMovableField(int x, int y) {
         if (checkXAndY(x, y)) {
-            List<Integer> possibleDirections = new ArrayList<>();
-            if (checkFieldAccessible(x + 1, y)) {
-                possibleDirections.add(0);
-            }
-            if (checkFieldAccessible(x, y + 1)) {
-                possibleDirections.add(1);
-            }
-            if (checkFieldAccessible(x - 1, y)) {
-                possibleDirections.add(2);
-            }
-            if (checkFieldAccessible(x, y - 1)) {
-                possibleDirections.add(3);
-            }
-            if (possibleDirections.isEmpty()) {
-                return getFieldOn(x, y);
-            } else {
-                int directionNo = (int) (Math.random() * possibleDirections.size());
-                switch (possibleDirections.get(directionNo)) {
-                    case 0:
-                        return getFieldOn(x + 1, y);
-                    case 1:
-                        return getFieldOn(x, y + 1);
-                    case 2:
-                        return getFieldOn(x - 1, y);
-                    case 3:
-                        return getFieldOn(x, y - 1);
-                }
+            int direction = getNextDirection(x, y);
+            switch (direction) {
+                case 0:
+                    return getFieldOn(x + 1, y);
+                case 1:
+                    return getFieldOn(x - 1, y);
+                case 2:
+                    return getFieldOn(x, y + 1);
+                case 3:
+                    return getFieldOn(x, y - 1);
             }
         }
         return -1;
@@ -182,7 +166,7 @@ public class Simulation {
         }
     }
 
-    public void declineField(int fromX, int fromY, int toX, int toY) {
+    public static void declineField(int fromX, int fromY, int toX, int toY) {
         if (checkXAndY(fromX, fromY) && checkXAndY(toX, toY)) {
             for (int x = fromX; (fromX < toX ? x < toX : x > toX); x += fromX < toX ? 1 : -1) {
                 for (int y = fromY; (fromY < toY ? y < toY : y > toY); y += fromY < toY ? 1 : -1) {
@@ -192,21 +176,46 @@ public class Simulation {
         }
     }
 
+    private static int getNextDirection(int x, int y) {
+        Boolean[] tries = new Boolean[4];
+        for (int i = 0; i < 4; i++) {
+            tries[i] = false;
+        }
+        while (!tries[0] || !tries[1] || !tries[2] || !tries[3]) {
+            int direction = (int) (Math.random() * 4);
+            if (checkAccessible(x + (direction == 0 ? 1 : direction == 1 ? -1 : 0),
+                    y + (direction == 2 ? 1 : direction == 3 ? -1 : 0))) {
+                return direction;
+            }
+            tries[direction] = true;
+        }
+        return -1;
+    }
+
+    private static boolean checkAccessible(int x, int y) {
+        return (x >= 0 && x < MAX_X && y >= 0 && y < MAX_Y) && fields.get(getFieldOn(x, y)).isAccessible();
+    }
+
     private static void moveAllPersons() {
         List<Move> moves = new ArrayList<>();
         fields
                 .forEach(field ->
                         field.getPersons().forEach(person -> {
                             if (Math.random() < MOBILITY) {
+                                int from = getFieldOn(field.getX(), field.getY());
+                                int to = getNextMovableField(field.getX(), field.getY());
                                 moves.add(Move.builder()
                                         .person(person)
-                                        .fromIndex(getFieldOn(field.getX(), field.getY()))
-                                        .toIndex(getNextMovableField(field.getX(), field.getY()))
+                                        .fromIndex(from)
+                                        .toIndex(to)
+                                        .from(new Point(fields.get(from).getX(),fields.get(from).getY()))
+                                        .to(new Point(fields.get(to).getX(),fields.get(to).getY()))
                                         .build());
                             }
                         })
                 );
         moves.forEach(move -> {
+            move.getPerson().setRecentMove(move);
             fields.get(move.getFromIndex()).removePerson(move.getPerson());
             fields.get(move.getToIndex()).addPerson(move.getPerson());
         });
@@ -234,8 +243,16 @@ public class Simulation {
                 if (systemTime + TIME_SPEED <= System.currentTimeMillis()) {
                     systemTime = System.currentTimeMillis();
                     process();
-                    mapPanel.updateSimulation();
-                    printAllFieldsWithInfectedPersonOnIt();
+//                    try {
+//                        SwingUtilities.invokeAndWait(()->mapPanel.updateSimulation());
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    } catch (InvocationTargetException e) {
+//                        e.printStackTrace();
+//                    }
+                    new Thread(() -> mapPanel.updateSimulation())
+                            .start();
+//                    printAllFieldsWithInfectedPersonOnIt();
                     System.out.println(TimeLine.getAktTimeStamp());
                     if (getInfectedCount() == 0) {
                         systemRunning.set(false);

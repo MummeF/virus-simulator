@@ -23,7 +23,7 @@ public class GraphicField extends JPanel {
         this.setVisible(true);
         this.setFocusable(false);
         this.setLayout(null);
-//        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem decline = new JMenuItem("Decline");
@@ -65,7 +65,7 @@ public class GraphicField extends JPanel {
     public void update(Field field) {
         this.field = field;
         if (field.isAccessible()) {
-           this.setBackground(Color.WHITE);
+            this.setBackground(Color.WHITE);
         } else {
             this.setBackground(Color.gray);
         }
@@ -82,10 +82,9 @@ public class GraphicField extends JPanel {
                 }
             }
         }
-        while (personIndex < persons.size()) {
+        for (; personIndex < persons.size(); personIndex++) {
             GraphicPerson toAdd = new GraphicPerson(persons.get(personIndex), 5, this.getWidth(), this.getHeight());
             this.add(toAdd);
-            personIndex++;
         }
         this.revalidate();
         this.repaint();

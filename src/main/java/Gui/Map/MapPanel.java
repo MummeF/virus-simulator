@@ -5,36 +5,35 @@ import process.Simulation;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import static process.ConfigLib.MAX_X;
-import static process.ConfigLib.MAX_Y;
+import static process.ConfigLib.*;
 
 public class MapPanel extends JPanel {
-    private List<GraphicField> fields = new ArrayList<>();
+    private GraphicField[][] fields = new GraphicField[MAX_X][MAX_Y];
 
     public MapPanel() {
         super();
-        this.setLayout(new GridLayout(MAX_Y, MAX_X));
+        this.setLayout(new GridLayout(MAX_X, MAX_Y));
+
         generateFields();
     }
 
     public void updateSimulation() {
-        AtomicInteger i = new AtomicInteger();
         Simulation.getFields().forEach(field -> {
-            this.fields.get(i.get()).update(field);
-            i.getAndIncrement();
+            this.fields[field.getX()][field.getY()].update(field);
         });
         this.revalidate();
         this.repaint();
     }
 
+
+
     private void generateFields() {
         Simulation.getFields().forEach(field -> {
             GraphicField graphicField = new GraphicField(field);
-            this.fields.add(graphicField);
+            this.fields[field.getX()][field.getY()] = graphicField;
             this.add(graphicField);
         });
     }
