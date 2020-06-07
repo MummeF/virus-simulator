@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/main/java/process/Simulation.java" line="171" />
-    <bookmark url="file://$PROJECT_DIR$/src/main/java/process/Simulation.java" line="200" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/process/Simulation.java" line="174" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/process/Simulation.java" line="203" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fb26687b-c518-4172-a38b-59927f125ad3" name="Default Changelist" comment="added mouselistener - need to get improved!!!">
+    <list default="true" id="fb26687b-c518-4172-a38b-59927f125ad3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/Gui/Settings/GraphPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Gui/Settings/SettingPanel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/process/time/TimeValue.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Gui/Map/GraphicField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Gui/Map/GraphicField.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Gui/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Gui/Gui.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Gui/Map/GraphicField.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Gui/Map/GraphicPerson.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Gui/Map/GraphicPerson.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Gui/Map/MapPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Gui/Map/MapPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Move.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Person.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/process/ConfigLib.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process/ConfigLib.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/process/Simulation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process/Simulation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/process/time/TimeLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/process/time/TimeLine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/model/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/model/Person.class" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -32,8 +36,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Gui.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
+            <state relative-caret-position="539">
+              <caret line="36" column="26" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -44,8 +48,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Map/MapPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="30" selection-start-line="30" selection-end-line="30" />
+            <state relative-caret-position="182">
+              <caret line="31" column="14" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="14" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -54,10 +58,24 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Map/GraphicField.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Settings/GraphPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
+            <state relative-caret-position="483">
+              <caret line="145" column="28" selection-start-line="145" selection-start-column="28" selection-end-line="145" selection-end-column="28" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#3636#3637#0" expanded="true" />
+                <element signature="e#3718#3719#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Map/GraphicPerson.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="42">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -65,11 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Map/GraphicPerson.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Settings/SettingPanel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="61" column="51" selection-start-line="61" selection-start-column="51" selection-end-line="61" selection-end-column="51" />
+            <state relative-caret-position="441">
+              <caret line="21" column="33" lean-forward="true" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,33 +98,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/process/time/TimeLine.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/process/time/Timestamp.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#603#604#0" expanded="true" />
-                <element signature="e#692#693#0" expanded="true" />
-                <element signature="e#738#739#0" expanded="true" />
-                <element signature="e#775#776#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/model/Person.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="30" column="28" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+            <state relative-caret-position="378">
+              <caret line="18" column="62" selection-start-line="18" selection-start-column="62" selection-end-line="18" selection-end-column="62" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -117,22 +110,22 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/process/Simulation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="251" column="23" selection-start-line="251" selection-start-column="23" selection-end-line="251" selection-end-column="23" />
+            <state relative-caret-position="21">
+              <caret line="40" column="31" selection-start-line="40" selection-start-column="31" selection-end-line="40" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4579#4580#0" expanded="true" />
-                <element signature="e#4646#4647#0" expanded="true" />
+                <element signature="e#810#811#0" expanded="true" />
+                <element signature="e#839#840#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/process/ConfigLib.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
+            <state relative-caret-position="189">
+              <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -165,7 +158,6 @@
         <option value="$PROJECT_DIR$/src/main/java/process/time/TimeUnit.java" />
         <option value="$PROJECT_DIR$/src/main/java/Gui/PersonenGitter.java" />
         <option value="$PROJECT_DIR$/src/main/java/model/Movement.java" />
-        <option value="$PROJECT_DIR$/src/main/java/process/time/TimeLine.java" />
         <option value="$PROJECT_DIR$/src/main/java/process/time/Timestamp.java" />
         <option value="$PROJECT_DIR$/src/main/java/Gui/GUI.java" />
         <option value="$PROJECT_DIR$/src/main/java/Gui/PersonMap.java" />
@@ -179,12 +171,16 @@
         <option value="$PROJECT_DIR$/src/main/java/model/Field.java" />
         <option value="$PROJECT_DIR$/src/main/java/Gui/Map/GraphicField.java" />
         <option value="$PROJECT_DIR$/src/main/java/model/Move.java" />
-        <option value="$PROJECT_DIR$/src/main/java/process/Simulation.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Gui/Gui.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Gui/Map/MapPanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/model/Person.java" />
-        <option value="$PROJECT_DIR$/src/main/java/process/ConfigLib.java" />
+        <option value="$PROJECT_DIR$/src/main/java/process/time/TimeValue.java" />
+        <option value="$PROJECT_DIR$/src/main/java/process/time/TimeLine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Gui/Gui.java" />
+        <option value="$PROJECT_DIR$/src/main/java/process/Simulation.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Gui/Map/MapPanel.java" />
         <option value="$PROJECT_DIR$/src/main/java/Gui/Map/GraphicPerson.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Gui/Settings/SettingPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Gui/Settings/GraphPanel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/process/ConfigLib.java" />
       </list>
     </option>
   </component>
@@ -207,8 +203,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="37" />
-    <option name="y" value="-19" />
+    <option name="x" value="-467" />
+    <option name="y" value="-12" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
   </component>
@@ -220,6 +216,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -268,6 +266,15 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="Gui" type="462c0819:PsiDirectoryNode" />
+              <item name="Settings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="virussimulator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="virussimulator" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -278,12 +285,19 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="process" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="virussimulator" type="b2602c69:ProjectViewProjectNode" />
+              <item name="virussimulator" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="process" type="462c0819:PsiDirectoryNode" />
+              <item name="time" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -396,7 +410,14 @@
       <option name="project" value="LOCAL" />
       <updated>1588112188532</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added movement">
+      <created>1591539837740</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1591539837741</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -408,7 +429,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26332623" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26599148" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -419,14 +440,14 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
       <window_info active="true" anchor="bottom" x="-1920" y="23" width="1920" height="1017" id="Run" maximized="true" order="2" type="WINDOWED" visible="true" weight="0.24052005" />
-      <window_info anchor="bottom" x="-1920" y="23" width="1920" height="1017" id="Debug" maximized="true" order="3" type="WINDOWED" visible="true" weight="0.36078006" />
+      <window_info anchor="bottom" x="-1920" y="23" width="1920" height="1017" id="Debug" maximized="true" order="3" type="WINDOWED" visible="true" weight="0.36619717" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Terminal" order="7" weight="0.08017335" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32936078" />
-      <window_info anchor="bottom" id="Messages" order="10" weight="0.40520042" />
+      <window_info anchor="bottom" id="Messages" order="10" weight="0.2156013" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -512,28 +533,35 @@
     <MESSAGE value="Finished logic for virus simulator. Maybe needs some improvement" />
     <MESSAGE value="Improved Logic, made Simulation static, added simple gui" />
     <MESSAGE value="added mouselistener - need to get improved!!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="added mouselistener - need to get improved!!!" />
+    <MESSAGE value="added movement" />
+    <option name="LAST_COMMIT_MESSAGE" value="added movement" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/process/Simulation.java</url>
-          <line>127</line>
+          <line>130</line>
           <properties />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/process/Simulation.java</url>
-          <line>191</line>
+          <line>194</line>
           <properties />
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Gui/Map/GraphicPerson.java</url>
-          <line>56</line>
+          <url>file://$PROJECT_DIR$/src/main/java/process/Simulation.java</url>
+          <line>261</line>
           <properties />
-          <option name="timeStamp" value="22" />
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Gui/Settings/GraphPanel.java</url>
+          <line>102</line>
+          <properties />
+          <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -563,53 +591,47 @@
     </expressions>
     <expressions id="evaluateExpression">
       <expression>
-        <expression-string>x + (direction == 0 ? 1 : direction == 1 ? -1 : 0)</expression-string>
+        <expression-string>((this.getHeight() - 20) / 2) * Math.abs(value) / scalaMin</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>checkAccessible(x+1,y)</expression-string>
+        <expression-string>((this.getHeight() - 20) / 2) * Math.abs(value)</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>x + direction == 0 ? 1 : direction == 1 ? -1 : 0</expression-string>
+        <expression-string>((this.getHeight() - 20) / 2) * Math.abs(value))</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>y + direction == 2 ? 1 : direction == 3 ? -1 : 0</expression-string>
+        <expression-string>(this.getHeight() - 20) / 2</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>y + (direction == 2 ? 1 : direction == 3 ? -1 : 0)</expression-string>
+        <expression-string>(this.getHeight() - 20) / 2)</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>checkAccessible(x + direction == 0 ? 1 : direction == 1 ? -1 : 0,
-                    y + direction == 2 ? 1 : direction == 3 ? -1 : 0)</expression-string>
+        <expression-string>((this.getHeight() - 20) / 2) + (((this.getHeight() - 20) / 2) * Math.abs(value)) / (scalaMin != 0 ? scalaMin : 1)</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>getFieldOn(x + 1, y)</expression-string>
+        <expression-string>10 + (((this.getHeight() - 25) * value) / (scalaMax != 0 ? scalaMax : 1))</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>getNextDirection(25,0)</expression-string>
+        <expression-string>TimeLine.infected</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
       <expression>
-        <expression-string>System.currentTimeMillis()</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>this.fields.get(getFieldOn(x, y))</expression-string>
+        <expression-string>TimeLine.deads</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
@@ -694,30 +716,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Gui.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/model/Move.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="18" column="38" selection-start-line="18" selection-start-column="38" selection-end-line="18" selection-end-column="38" />
+        <state relative-caret-position="231">
+          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Map/GraphicField.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/model/Person.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="30" column="28" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Map/MapPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        <state relative-caret-position="560">
+          <caret line="97" column="17" selection-start-line="97" selection-start-column="17" selection-end-line="97" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -726,7 +739,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/process/time/Timestamp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
+        <state relative-caret-position="483">
           <caret line="23" column="5" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -738,49 +751,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Map/GraphicField.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/process/time/TimeValue.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="16" column="5" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/model/Move.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="11" column="35" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/process/time/TimeLine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/process/Simulation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="251" column="23" selection-start-line="251" selection-start-column="23" selection-end-line="251" selection-end-column="23" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4579#4580#0" expanded="true" />
-            <element signature="e#4646#4647#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/process/ConfigLib.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
+        <state relative-caret-position="126">
+          <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -789,8 +763,82 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Map/GraphicPerson.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="61" column="51" selection-start-line="61" selection-start-column="51" selection-end-line="61" selection-end-column="51" />
+        <state relative-caret-position="42">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/process/time/TimeLine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="18" column="62" selection-start-line="18" selection-start-column="62" selection-end-line="18" selection-end-column="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Gui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="539">
+          <caret line="36" column="26" selection-start-line="36" selection-start-column="26" selection-end-line="36" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Settings/SettingPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="21" column="33" lean-forward="true" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Map/MapPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="31" column="14" selection-start-line="31" selection-start-column="14" selection-end-line="31" selection-end-column="14" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Gui/Settings/GraphPanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="145" column="28" selection-start-line="145" selection-start-column="28" selection-end-line="145" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3636#3637#0" expanded="true" />
+            <element signature="e#3718#3719#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/process/Simulation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="40" column="31" selection-start-line="40" selection-start-column="31" selection-end-line="40" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#810#811#0" expanded="true" />
+            <element signature="e#839#840#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/process/ConfigLib.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

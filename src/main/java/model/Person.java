@@ -1,5 +1,6 @@
 package model;
 
+import Gui.Map.GraphicPerson;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
@@ -30,6 +31,8 @@ public class Person {
     //move
     private Move recentMove;
     private Point recentPosition;
+
+    private GraphicPerson graphicPerson;
 
 
     private Timestamp timeOfInfection;
@@ -95,5 +98,9 @@ public class Person {
     public String toString() {
         return String.format("Person %d{\n\tage: %d\n\tname: %s\n\tsex: %s\n\trisk group: %b\n\timmune: %b\n\tinfected: %b\n\tinfection time: %s\n}",
                 this.ident, this.age, this.name, this.getSex(), this.riskGroup(), this.immune, this.infected, this.timeOfInfection);
+    }
+
+    public void updateGraphicPerson(int x, int y, int fieldWidth, int fieldHeight) {
+        this.graphicPerson.update(this, x, y, fieldWidth, fieldHeight);
     }
 }

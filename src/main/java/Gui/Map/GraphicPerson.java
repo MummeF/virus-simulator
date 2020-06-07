@@ -9,34 +9,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Ellipse2D;
 
+import static process.ConfigLib.ANIMATED_MOVE;
 import static process.ConfigLib.TIME_SPEED;
 
-//@AllArgsConstructor
+
 @Data
 public class GraphicPerson extends JPanel {
     private Person person;
     private int radius;
-    private int maxX;
-    private int maxY;
+    private int width;
+    private int height;
+    private int possibleX;
+    private int possibleY;
 
-    //
-    public GraphicPerson(Person person, int radius, int maxX, int maxY) {
+
+    public GraphicPerson(Person person, int radius, int x, int y, int width, int height) {
         this.person = person;
         this.radius = radius;
-        this.maxX = maxX;
-        this.maxY = maxY;
+        this.possibleX = x;
+        this.possibleY = y;
+        this.width = width;
+        this.height = height;
         this.setVisible(true);
         this.setLayout(null);
-        if (person.getRecentPosition() != null) {
-            this.setBounds(person.getRecentPosition().x, person.getRecentPosition().y, radius * 2, radius * 2);
-            animatedMove(this, createRandomPosition());
-        } else {
-            setRandomBounds();
-        }
+        setRandomBounds();
     }
 
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
+//        g2d.setColor(Color.white);
+//        g2d.fillRect(0, 0, radius * 2, radius * 2);
         g2d.setColor(this.person.isInfected() ? Color.RED : this.person.isImmune() ? Color.GREEN : Color.GRAY);
         g2d.fill(new Ellipse2D.Double(0, 0, radius * 2, radius * 2));
     }
@@ -48,21 +50,37 @@ public class GraphicPerson extends JPanel {
     }
 
     private Point createRandomPosition() {
-        return new Point((int) (Math.random() * Math.abs(maxX - radius - 2)),
-                (int) (Math.random() * Math.abs(maxY - radius - 2)));
+        return new Point(this.possibleX + (int) (Math.random() * Math.abs(width - radius - 2)),
+                this.possibleY + (int) (Math.random() * Math.abs(height - radius - 2)));
     }
 
 
-    public void update(Person person) {
+    public void update(Person person, int x, int y, int width, int height) {
+        this.possibleX = x;
+        this.possibleY = y;
+        this.width = width;
+        this.height = height;
         this.person = person;
         if (this.person.getRecentPosition() != null) {
-            this.setBounds(person.getRecentPosition().x, person.getRecentPosition().y, radius * 2, radius * 2);
-            Point randomPos = createRandomPosition();
-            animatedMove(this, randomPos);
-            this.person.setRecentPosition(randomPos);
+            if (!isInField(this.person.getRecentPosition())) {
+                if (ANIMATED_MOVE) {
+                    Point randomPos = createRandomPosition();
+                    animatedMove(this, randomPos);
+                    this.person.setRecentPosition(randomPos);
+                } else {
+                    setRandomBounds();
+                }
+            }
+        } else {
+            setRandomBounds();
         }
         this.revalidate();
         this.repaint();
+    }
+
+    private boolean isInField(Point recentPosition) {
+        return (recentPosition.x >= this.possibleX && recentPosition.x <= this.possibleX + this.width)
+                && (recentPosition.y >= this.possibleY && recentPosition.y <= this.possibleY + this.height);
     }
 
     public static void animatedMove(GraphicPerson person, Point newPoint) {
@@ -74,7 +92,7 @@ public class GraphicPerson extends JPanel {
                     animFrame = new Point((newPoint.x - oldPoint.x) / frames,
                             (newPoint.y - oldPoint.y) / frames);
 
-            new Timer(TIME_SPEED / frames, new ActionListener() {
+            new Timer((TIME_SPEED / 3 * 2) / frames, new ActionListener() {
                 int currentFrame = 0;
 
                 public void actionPerformed(ActionEvent e) {

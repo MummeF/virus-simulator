@@ -1,14 +1,17 @@
 package process;
 
-import Gui.Map.MapPanel;
+import Gui.Gui;
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import model.Field;
 import model.Move;
 import model.Person;
 import process.time.TimeLine;
 
+import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -19,8 +22,8 @@ import static process.ConfigLib.*;
 
 @Data
 public class Simulation {
-    //    private Gui gui;
-    private static MapPanel mapPanel;
+    @Setter
+    private static Gui gui;
 
 
     @Getter
@@ -28,14 +31,14 @@ public class Simulation {
     @Getter
     private static List<Person> deads = new ArrayList<>();
 
-    public Simulation() {
-//        this.gui = gui;
-        this.generatePersonsOnField();
-        this.plantVirus();
+
+    private static boolean paused = false;
+
+    public static void pause() {
+        paused = true;
     }
 
-    public static void init(MapPanel panel) {
-        mapPanel = panel;
+    public static void init() {
         generatePersonsOnField();
         plantVirus();
     }
@@ -208,8 +211,8 @@ public class Simulation {
                                         .person(person)
                                         .fromIndex(from)
                                         .toIndex(to)
-                                        .from(new Point(fields.get(from).getX(),fields.get(from).getY()))
-                                        .to(new Point(fields.get(to).getX(),fields.get(to).getY()))
+                                        .from(new Point(fields.get(from).getX(), fields.get(from).getY()))
+                                        .to(new Point(fields.get(to).getX(), fields.get(to).getY()))
                                         .build());
                             }
                         })
@@ -234,25 +237,25 @@ public class Simulation {
         });
     }
 
-    public static void run() {
+    public static void start() {
+        paused = false;
         AtomicBoolean systemRunning = new AtomicBoolean(true);
         printAllFieldsWithInfectedPersonOnIt();
         new Thread(() -> {
             long systemTime = System.currentTimeMillis() - TIME_SPEED;
             while (systemRunning.get()) {
-                if (systemTime + TIME_SPEED <= System.currentTimeMillis()) {
+                if (paused) {
+                    systemRunning.set(false);
+                } else if (systemTime + TIME_SPEED <= System.currentTimeMillis()) {
                     systemTime = System.currentTimeMillis();
                     process();
-//                    try {
-//                        SwingUtilities.invokeAndWait(()->mapPanel.updateSimulation());
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    } catch (InvocationTargetException e) {
-//                        e.printStackTrace();
-//                    }
-                    new Thread(() -> mapPanel.updateSimulation())
-                            .start();
-//                    printAllFieldsWithInfectedPersonOnIt();
+                    try {
+                        SwingUtilities.invokeAndWait(() -> gui.updateSimulation());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
                     System.out.println(TimeLine.getAktTimeStamp());
                     if (getInfectedCount() == 0) {
                         systemRunning.set(false);
