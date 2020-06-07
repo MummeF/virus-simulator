@@ -211,14 +211,11 @@ public class Simulation {
                                         .person(person)
                                         .fromIndex(from)
                                         .toIndex(to)
-                                        .from(new Point(fields.get(from).getX(), fields.get(from).getY()))
-                                        .to(new Point(fields.get(to).getX(), fields.get(to).getY()))
                                         .build());
                             }
                         })
                 );
         moves.forEach(move -> {
-            move.getPerson().setRecentMove(move);
             fields.get(move.getFromIndex()).removePerson(move.getPerson());
             fields.get(move.getToIndex()).addPerson(move.getPerson());
         });

@@ -29,7 +29,6 @@ public class Person {
     private double riskFactor = initRiskFactor();
 
     //move
-    private Move recentMove;
     private Point recentPosition;
 
     private GraphicPerson graphicPerson;

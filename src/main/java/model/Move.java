@@ -10,5 +10,4 @@ import java.awt.*;
 public class Move {
     private Person person;
     private int fromIndex, toIndex;
-    private Point from, to;
 }
