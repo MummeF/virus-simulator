@@ -27,20 +27,33 @@ public class Simulation {
 
 
     @Getter
-    private static List<Field> fields = generateFields(MAX_X, MAX_Y);
+    private static List<Field> fields;
     @Getter
-    private static List<Person> deads = new ArrayList<>();
+    private static List<Person> deads;
 
 
+    @Getter
     private static boolean paused = false;
+    @Getter
+    private static boolean finished = false;
+    @Getter
+    private static AtomicBoolean systemRunning;
 
     public static void pause() {
         paused = true;
     }
 
     public static void init() {
+        TimeLine.resetTime();
+        gui.resetSimulation();
+        fields = generateFields(MAX_X, MAX_Y);
+        deads = new ArrayList<>();
         generatePersonsOnField();
         plantVirus();
+        systemRunning = new AtomicBoolean(false);
+        paused = false;
+        finished = false;
+        SwingUtilities.invokeLater(() -> gui.updateSimulation());
     }
 
     public static int getInfectedCount() {
@@ -236,8 +249,8 @@ public class Simulation {
 
     public static void start() {
         paused = false;
-        AtomicBoolean systemRunning = new AtomicBoolean(true);
         printAllFieldsWithInfectedPersonOnIt();
+        systemRunning.set(true);
         new Thread(() -> {
             long systemTime = System.currentTimeMillis() - TIME_SPEED;
             while (systemRunning.get()) {
@@ -256,6 +269,9 @@ public class Simulation {
                     System.out.println(TimeLine.getAktTimeStamp());
                     if (getInfectedCount() == 0) {
                         systemRunning.set(false);
+                        paused = false;
+                        finished = true;
+                        gui.updateSimulation();
                         System.out.println("VIRUS BESIEGT!! Anzahl an Toten: " + getDeads().size()
                                 + ", Anzahl an Genesenen: " + getImmuneCount());
                     }

@@ -28,4 +28,11 @@ public class TimeLine {
         immune.add(new TimeValue(aktTime, Simulation.getImmuneCount()));
         aktTime += TIME_SPEED_STEP;
     }
+
+    public static void resetTime() {
+        aktTime = 0;
+        deads = new ArrayList<>();
+        infected = new ArrayList<>();
+        immune = new ArrayList<>();
+    }
 }

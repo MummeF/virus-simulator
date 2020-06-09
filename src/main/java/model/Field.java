@@ -63,11 +63,12 @@ public class Field {
     }
 
     public void process(){
-        boolean anyInfectedPersonOnField = this.persons.stream()
-                .anyMatch(Person::isInfected);
-        if(anyInfectedPersonOnField) {
+        long count = this.persons.stream()
+                .filter(Person::isInfected)
+                .count();
+        if(count > 0) {
             for (Person person : this.persons) {
-                if(Math.random() < PROBABILITY_OF_INFECTION_ON_FIELD){
+                if(Math.random() < (PROBABILITY_OF_INFECTION_ON_FIELD * Math.sqrt(count))){
                     person.infect();
                 }
             }

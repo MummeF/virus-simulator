@@ -86,7 +86,7 @@ public class GraphPanel extends JPanel {
         if (relative) {
             g2d.drawLine(10, (this.getHeight() - 20) / 2, this.getWidth() - 10, (this.getHeight() - 20) / 2);
         } else {
-            g2d.drawLine(10, this.getHeight() - 10, this.getWidth() - 10, this.getHeight() - 10);
+            g2d.drawLine(10, this.getHeight() - 15, this.getWidth() - 10, this.getHeight() - 15);
         }
         g2d.drawLine(10, 15, 10, this.getHeight() - 15);
     }
@@ -103,7 +103,7 @@ public class GraphPanel extends JPanel {
                 return ((this.getHeight() - 20) / 2) + (((this.getHeight() - 20) / 2) * Math.abs(value)) / (scalaMin != 0 ? Math.abs(scalaMin) : 1);
             }
         }
-        return this.getHeight() - 10 - (((this.getHeight() - 25) * value) / (scalaMax != 0 ? scalaMax : 1));
+        return this.getHeight() - 15 - (((this.getHeight() - 25) * value) / (scalaMax != 0 ? scalaMax : 1));
     }
 
     public void update(List<TimeValue> deads, List<TimeValue> infected, List<TimeValue> immune) {

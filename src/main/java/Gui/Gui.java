@@ -35,7 +35,11 @@ public class Gui extends JFrame {
         this.add(settingPanel, BorderLayout.WEST);
 
         Simulation.init();
-        Simulation.start();
+
+    }
+
+    public void resetSimulation(){
+        mapPanel.resetSimulation();
     }
 
     public void updateSimulation() {

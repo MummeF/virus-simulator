@@ -21,7 +21,6 @@ public class MapPanel extends JPanel {
         fieldWidth = this.getWidth() / MAX_X;
         fieldHeight = this.getHeight() / MAX_Y;
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        updateSimulation();
     }
 
     public void updateSimulation() {
@@ -62,4 +61,9 @@ public class MapPanel extends JPanel {
     }
 
 
+    public void resetSimulation() {
+        this.removeAll();
+        this.revalidate();
+        this.repaint();
+    }
 }
