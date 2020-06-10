@@ -20,28 +20,26 @@ public class SettingPanel extends JPanel {
         this.setVisible(true);
         this.addComponent(new JLabel("Settings"), width, 20);
 
-        configPanel = new ConfigPanel(width, height / 3 - 20);
+        configPanel = new ConfigPanel(width, (height / 3));
         this.add(configPanel);
 
         totalGraph = new GraphPanel(TimeLine.getDeads(), TimeLine.getInfected(), TimeLine.getImmune(), false);
         relativeGraph = new GraphPanel(TimeLine.getDeads(), TimeLine.getInfected(), TimeLine.getImmune(), true);
-        this.addComponent(totalGraph, width - 10, height / 3);
-        this.addComponent(relativeGraph, width - 10, height / 3);
+        this.addComponent(totalGraph, width - 10, height / 4);
+        this.addComponent(relativeGraph, width - 10, height / 4);
     }
 
 
     private void updateSettings() {
-        if (Simulation.getSystemRunning().get() || Simulation.isPaused()) {
+        if (Simulation.getSystemRunning().get() || Simulation.isPaused() || Simulation.isFinished()) {
             totalGraph.setVisible(true);
             relativeGraph.setVisible(true);
+            configPanel.setPreferredSize(new Dimension(this.getWidth(), (this.getHeight() / 3)));
+
         } else {
-            if (Simulation.isFinished()) {
-                totalGraph.setVisible(true);
-                relativeGraph.setVisible(true);
-            } else {
-                totalGraph.setVisible(false);
-                relativeGraph.setVisible(false);
-            }
+            configPanel.setPreferredSize(new Dimension(this.getWidth(), this.getHeight() - 100));
+            totalGraph.setVisible(false);
+            relativeGraph.setVisible(false);
         }
     }
 
