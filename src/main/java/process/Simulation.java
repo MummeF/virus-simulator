@@ -10,7 +10,6 @@ import model.Person;
 import process.time.TimeLine;
 
 import javax.swing.*;
-import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,22 +79,6 @@ public class Simulation {
                 field.addPerson(new Person());
             }
         });
-    }
-
-    public static void printAllFieldsWithPersonOnIt() {
-        fields.stream()
-                .filter(field -> field.getPersons().size() > 0)
-                .forEach(field -> System.out.println(field.toString()));
-    }
-
-    public static void printAllFieldsWithInfectedPersonOnIt() {
-        fields.stream()
-                .filter(field -> field.getPersons().size() > 0)
-                .filter(field ->
-                        field.getPersons().stream()
-                                .anyMatch(person -> person.isInfected())
-                )
-                .forEach(field -> System.out.println(field.toString()));
     }
 
     private static void plantVirus() {
@@ -249,7 +232,6 @@ public class Simulation {
 
     public static void start() {
         paused = false;
-        printAllFieldsWithInfectedPersonOnIt();
         systemRunning.set(true);
         new Thread(() -> {
             long systemTime = System.currentTimeMillis() - TIME_SPEED;
@@ -266,14 +248,11 @@ public class Simulation {
                     } catch (InvocationTargetException e) {
                         e.printStackTrace();
                     }
-                    System.out.println(TimeLine.getAktTimeStamp());
                     if (getInfectedCount() == 0) {
                         systemRunning.set(false);
                         paused = false;
                         finished = true;
                         gui.updateSimulation();
-                        System.out.println("VIRUS BESIEGT!! Anzahl an Toten: " + getDeads().size()
-                                + ", Anzahl an Genesenen: " + getImmuneCount());
                     }
                 }
             }
