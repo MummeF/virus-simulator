@@ -1,5 +1,6 @@
-package Gui.Settings;
+package Gui.Settings.graph;
 
+import lombok.Getter;
 import process.time.TimeValue;
 
 import javax.swing.*;
@@ -14,8 +15,14 @@ public class GraphPanel extends JPanel {
     private int scalaMax;
     private JLabel scalaXMax;
     private boolean relative;
+    private JScrollBar scrollBar;
+    @Getter
+    private static final int RELATIVE_NUMBER = 10;
+    private int scrollPosition = 0;
 
-    public GraphPanel(List<TimeValue> deads, List<TimeValue> infected, List<TimeValue> immune, boolean relative) {
+    public GraphPanel(List<TimeValue> deads, List<TimeValue> infected, List<TimeValue> immune,
+                      boolean relative, int width, int height) {
+        this.setPreferredSize(new Dimension(width, height));
         this.relative = relative;
         this.setLayout(null);
         this.setVisible(true);
@@ -23,12 +30,20 @@ public class GraphPanel extends JPanel {
         scalaXMax.setBounds(1, 1, 30, 14);
         this.add(scalaXMax);
         this.update(deads, infected, immune);
+        scrollBar = new JScrollBar(JScrollBar.HORIZONTAL, infected.size(), infected.size(), 0, infected.size());
+        scrollBar.addAdjustmentListener(e -> {
+            scrollPosition = e.getValue();
+            repaint();
+        });
+        this.add(scrollBar);
     }
 
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.WHITE);
         g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+        scrollBar.setBounds(0, this.getHeight() - 15, this.getWidth(), 15);
+        scrollBar.setVisible(this.relative);
         this.paintScala(g2d);
         this.paintGraph(g2d);
     }
@@ -39,29 +54,29 @@ public class GraphPanel extends JPanel {
             if (!deads.isEmpty()) {
                 for (int i = 0; i < deads.size(); i++) {
                     int x = translateX(deads.get(i).getTime());
-                    int width = (this.getWidth() - 30) / (deads.size() * 3);
+                    int width = (this.getWidth() - 30) / (RELATIVE_NUMBER * 3);
                     int y = translateY(deads.get(i).getValue());
-                    int height =  this.getHeight() - 15 - y ;
+                    int height = this.getHeight() - 20 - y;
                     g2d.fillRect(x, y, width, height);
                 }
             }
             g2d.setColor(Color.GREEN);
             if (!immune.isEmpty()) {
                 for (int i = 0; i < immune.size(); i++) {
-                    int width = (this.getWidth() - 30) / (immune.size() * 3);
+                    int width = (this.getWidth() - 30) / (RELATIVE_NUMBER * 3);
                     int x = translateX(immune.get(i).getTime()) + width;
                     int y = translateY(immune.get(i).getValue());
-                    int height =  this.getHeight() - 15 - y ;
+                    int height = this.getHeight() - 20 - y;
                     g2d.fillRect(x, y, width, height);
                 }
             }
             g2d.setColor(Color.RED);
             if (!infected.isEmpty()) {
                 for (int i = 0; i < infected.size(); i++) {
-                    int width = (this.getWidth() - 30) / (infected.size() * 3);
+                    int width = (this.getWidth() - 30) / (RELATIVE_NUMBER * 3);
                     int x = translateX(infected.get(i).getTime()) + (width * 2);
                     int y = translateY(infected.get(i).getValue());
-                    int height =  this.getHeight() - 15 - y ;
+                    int height = this.getHeight() - 20 - y;
                     g2d.fillRect(x, y, width, height);
                 }
             }
@@ -113,16 +128,21 @@ public class GraphPanel extends JPanel {
 
     private void paintScala(Graphics2D g2d) {
         g2d.setColor(Color.BLACK);
-        g2d.drawLine(10, this.getHeight() - 15, this.getWidth() - 10, this.getHeight() - 15);
-        g2d.drawLine(10, 15, 10, this.getHeight() - 15);
+        g2d.drawLine(10, this.getHeight() - (this.relative ? 20 : 15), this.getWidth() - 10,
+                this.getHeight() - (this.relative ? 20 : 15));
+        g2d.drawLine(10, 15, 10, this.getHeight() - (this.relative ? 20 : 15));
     }
 
     private int translateX(long time) {
-        return (int) (10 + ((this.getWidth() - 30) / deads.size()) * time);
+        int stepSize = (this.getWidth() - 30) / (this.relative ? RELATIVE_NUMBER : deads.size());
+        int scrollStart = stepSize * scrollPosition;
+        int scrollPos = this.relative ? (scrollStart >= this.getWidth() ? (scrollStart - (this.getWidth() - 50)) : 0) : 0;
+        return (int) (10 + stepSize * time) - scrollPos;
     }
 
     private int translateY(int value) {
-        return this.getHeight() - 15 - (((this.getHeight() - 25) * value) / (scalaMax != 0 ? scalaMax : 1));
+        return this.getHeight() - (this.relative ? 20 : 15) - (((this.getHeight() - (this.relative ? 45 : 25)) * value)
+                / (scalaMax != 0 ? scalaMax : 1));
     }
 
     public void update(List<TimeValue> deads, List<TimeValue> infected, List<TimeValue> immune) {
@@ -166,6 +186,13 @@ public class GraphPanel extends JPanel {
                 .max().ifPresentOrElse(scala -> this.scalaMax = scala, () -> scalaMax = 1);
         scalaXMax.setText(scalaMax + "");
         scalaXMax.setBounds(1, 1, 30, 14);
+        if (scrollBar != null) {
+            boolean fixedRight = scrollBar.getMaximum() == scrollBar.getValue();
+            scrollBar.setMaximum(infected.size());
+            if (fixedRight) {
+                scrollBar.setValue(scrollBar.getMaximum());
+            }
+        }
         this.revalidate();
         this.repaint();
     }
