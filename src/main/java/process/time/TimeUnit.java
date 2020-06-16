@@ -1,16 +1,30 @@
 package process.time;
 
+import lombok.Getter;
+
 public enum TimeUnit {
-    Weeks("Weeks"), Days("Days"), Hours("Hours"), Minutes("Minutes");
+    Weeks("Wochen", "w"), Days("Tage", "d"), Hours("Stunden", "h");
 
-    private String value;
+    @Getter
+    private final String longName;
+    @Getter
+    private final String shortName;
 
 
-
-    TimeUnit(String value){
-        this.value = value;
+    TimeUnit(String longName, String shortName) {
+        this.longName = longName;
+        this.shortName = shortName;
     }
-    public String value(){
-        return this.value;
+
+    public static TimeUnit ofLongName(String longName) {
+       if(longName.equals(Weeks.longName)){
+           return Weeks;
+       }else if(longName.equals(Days.longName)){
+           return Days;
+       }else if(longName.equals(Hours.longName)){
+           return Hours;
+       }else {
+           return null;
+       }
     }
 }

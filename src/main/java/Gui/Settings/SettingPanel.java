@@ -1,6 +1,5 @@
 package Gui.Settings;
 
-import Gui.Settings.graph.GraphPanel;
 import Gui.Settings.graph.LabeledGraphPanel;
 import process.Simulation;
 import process.time.TimeLine;
@@ -13,24 +12,29 @@ public class SettingPanel extends JPanel {
 
     private LabeledGraphPanel totalGraph, relativeGraph;
     private ConfigPanel configPanel;
+    private JScrollPane configScrollPanel;
 
 
     public SettingPanel(int width, int height) {
         this.setPreferredSize(new Dimension(width, height));
-        this.setVisible(true);
         this.addComponent(new JLabel("Settings"), width, 20);
 
-        configPanel = new ConfigPanel(width, (height / 3));
-        this.add(configPanel);
+        configPanel = new ConfigPanel(width - 10);
+
+        configScrollPanel = new JScrollPane(
+                configPanel,
+                JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        configScrollPanel.setPreferredSize(new Dimension(width, height));
+        this.add(configScrollPanel);
 
         totalGraph = new LabeledGraphPanel(TimeLine.getDeads(), TimeLine.getInfected(), TimeLine.getImmune(),
                 false, width - 10, height / 4);
         relativeGraph = new LabeledGraphPanel(TimeLine.getDeads(), TimeLine.getInfected(), TimeLine.getImmune(),
                 true, width - 10, height / 4);
-//        this.addComponent(totalGraph, width - 10, height / 4);
-//        this.addComponent(relativeGraph, width - 10, height / 4);
         this.add(totalGraph);
         this.add(relativeGraph);
+
     }
 
 
@@ -38,10 +42,10 @@ public class SettingPanel extends JPanel {
         if (Simulation.getSystemRunning().get() || Simulation.isPaused() || Simulation.isFinished()) {
             totalGraph.setVisible(true);
             relativeGraph.setVisible(true);
-            configPanel.setPreferredSize(new Dimension(this.getWidth(), (this.getHeight() / 3)));
+            configScrollPanel.setPreferredSize(new Dimension(this.getWidth(), (this.getHeight() / 3)));
 
         } else {
-            configPanel.setPreferredSize(new Dimension(this.getWidth(), this.getHeight() - 100));
+            configScrollPanel.setPreferredSize(new Dimension(this.getWidth(), this.getHeight() - 100));
             totalGraph.setVisible(false);
             relativeGraph.setVisible(false);
         }

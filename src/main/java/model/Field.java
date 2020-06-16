@@ -13,7 +13,6 @@ import static process.ConfigLib.PROBABILITY_OF_INFECTION_ON_FIELD;
 public class Field {
     private int x = -1;
     private int y = -1;
-    private boolean accessible = true;
     private List<Person> persons;
 
     @Builder
@@ -25,22 +24,6 @@ public class Field {
 
     public void addPerson(Person toAdd) {
         this.persons.add(toAdd);
-    }
-
-    public List<Person> decline(){
-        if(this.persons.isEmpty()) {
-            this.accessible = false;
-            return new ArrayList<>();
-        }else{
-            List<Person> tmp = this.persons;
-            this.persons = new ArrayList<>();
-            this.accessible = false;
-            return tmp;
-        }
-    }
-
-    public void allow(){
-        this.accessible = true;
     }
 
     public boolean removePersonByIdentifier(int ident) {

@@ -30,6 +30,7 @@ public class Person {
 
     //move
     private Point recentPosition;
+    private int lastDirection;
 
     private GraphicPerson graphicPerson;
 

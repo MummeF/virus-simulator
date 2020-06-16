@@ -26,7 +26,7 @@ public class TimeLine {
         deads.add(new TimeValue(aktTime, Simulation.getDeads().size()));
         infected.add(new TimeValue(aktTime, Simulation.getInfectedCount()));
         immune.add(new TimeValue(aktTime, Simulation.getImmuneCount()));
-        aktTime += TIME_SPEED_STEP;
+        aktTime++;
     }
 
     public static void resetTime() {

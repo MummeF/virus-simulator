@@ -10,11 +10,12 @@ import java.awt.event.MouseListener;
 
 public class ConfigPanel extends JPanel {
     private JButton startStopButton, resetButton;
-    private SingleInputPanel size, mobility, population, riskAge, lethality, lethalityPlusForRiskage,
-            inkubationTime, illnessTime, infection;
+    private JLabel field, virus, system;
+    private SingleInputPanel size, mobility, direction, population, riskAge, lethality, lethalityPlusForRiskage,
+            incubationTime, illnessTime, infection, animatedMove, timeSpeed, timeSpeedStep, timeUnit;
 
-    public ConfigPanel(int width, int height) {
-        this.setPreferredSize(new Dimension(width, height));
+    public ConfigPanel(int width) {
+        this.setPreferredSize(new Dimension(width, 500));
         resetButton = new JButton("Zurücksetzen");
         resetButton.addMouseListener(new MouseListener() {
             @Override
@@ -85,16 +86,24 @@ public class ConfigPanel extends JPanel {
         this.addComponent(startStopButton, width / 2, 20);
         this.addComponent(resetButton, width / 4, 20);
         resetButton.setVisible(false);
+        field = new JLabel("Bewegung und Bevölkerung", SwingConstants.LEFT);
+        field.setFont(new Font(field.getFont().getName(), Font.BOLD, field.getFont().getSize()));
+        this.addComponent(field, width, 20);
         this.size = new SingleInputPanel(width, 30, SingleInputPanel.SIZE, "Größenfaktor:");
         this.add(size);
         this.population = new SingleInputPanel(width, 30, SingleInputPanel.POPULATION, "Bevölkerungsdichte pro Feld:");
         this.add(population);
         this.mobility = new SingleInputPanel(width, 30, SingleInputPanel.MOBILITY, "Mobilitätsfaktor:");
         this.add(mobility);
+        this.direction = new SingleInputPanel(width, 30, SingleInputPanel.DIRECTION, "Wahrscheinlichkeit zum Richtungswechsel:");
+        this.add(direction);
+        virus = new JLabel("Krankheit", SwingConstants.LEFT);
+        virus.setFont(new Font(virus.getFont().getName(), Font.BOLD, virus.getFont().getSize()));
+        this.addComponent(virus, width, 20);
         this.riskAge = new SingleInputPanel(width, 30, SingleInputPanel.RISKAGE, "Risikoalter:");
         this.add(riskAge);
-        this.inkubationTime = new SingleInputPanel(width, 30, SingleInputPanel.INCUBATION, "Inkubationszeit:");
-        this.add(inkubationTime);
+        this.incubationTime = new SingleInputPanel(width, 30, SingleInputPanel.INCUBATION, "Inkubationszeit:");
+        this.add(incubationTime);
         this.illnessTime = new SingleInputPanel(width, 30, SingleInputPanel.ILLNESS, "Krankheitsdauer:");
         this.add(illnessTime);
         this.lethality = new SingleInputPanel(width, 30, SingleInputPanel.LETHALITY, "Tödlichkeitsfaktor pro Tag:");
@@ -103,7 +112,17 @@ public class ConfigPanel extends JPanel {
         this.add(lethalityPlusForRiskage);
         this.infection = new SingleInputPanel(width, 30, SingleInputPanel.INFECTIONONFIELD, "Wahrscheinlichkeit der Infektion bei Kontakt:");
         this.add(infection);
-
+        system = new JLabel("System", SwingConstants.LEFT);
+        system.setFont(new Font(system.getFont().getName(), Font.BOLD, system.getFont().getSize()));
+        this.addComponent(system, width, 20);
+        this.animatedMove = new SingleInputPanel(width, 30, SingleInputPanel.ANIMATION, "Animierte Bewegung:");
+        this.add(animatedMove);
+        this.timeSpeed = new SingleInputPanel(width, 30, SingleInputPanel.TIMESPEED, "Dauer der Züge:");
+        this.add(timeSpeed);
+        this.timeSpeedStep = new SingleInputPanel(width, 30, SingleInputPanel.TIMESPEEDSTEP, "Vergangene Zeiteinheit pro Zug:");
+        this.add(timeSpeedStep);
+        this.timeUnit = new SingleInputPanel(width, 30, SingleInputPanel.TIMEUNIT, "Zeiteinheit:");
+        this.add(timeUnit);
 
     }
 
@@ -129,11 +148,16 @@ public class ConfigPanel extends JPanel {
             mobility.setVisible(true);
             population.setVisible(false);
             riskAge.setVisible(true);
-            inkubationTime.setVisible(true);
+            incubationTime.setVisible(true);
             illnessTime.setVisible(true);
             lethality.setVisible(true);
             lethalityPlusForRiskage.setVisible(true);
             infection.setVisible(true);
+            animatedMove.setVisible(true);
+            infection.setVisible(true);
+            timeSpeed.setVisible(true);
+            timeSpeedStep.setVisible(true);
+            timeUnit.setVisible(false);
         } else {
             startStopButton.setVisible(true);
             startStopButton.setPreferredSize(new Dimension(this.getWidth() / 2, 20));
@@ -145,22 +169,32 @@ public class ConfigPanel extends JPanel {
                 mobility.setVisible(true);
                 population.setVisible(false);
                 riskAge.setVisible(true);
-                inkubationTime.setVisible(true);
+                incubationTime.setVisible(true);
                 illnessTime.setVisible(true);
                 lethality.setVisible(true);
                 lethalityPlusForRiskage.setVisible(true);
                 infection.setVisible(true);
+                animatedMove.setVisible(true);
+                infection.setVisible(true);
+                timeSpeed.setVisible(true);
+                timeSpeedStep.setVisible(true);
+                timeUnit.setVisible(false);
             } else {
                 startStopButton.setText("Simulation starten");
                 size.setVisible(true);
                 mobility.setVisible(true);
                 population.setVisible(true);
                 riskAge.setVisible(true);
-                inkubationTime.setVisible(true);
+                incubationTime.setVisible(true);
                 illnessTime.setVisible(true);
                 lethality.setVisible(true);
                 lethalityPlusForRiskage.setVisible(true);
                 infection.setVisible(true);
+                animatedMove.setVisible(true);
+                infection.setVisible(true);
+                timeSpeed.setVisible(true);
+                timeSpeedStep.setVisible(true);
+                timeUnit.setVisible(true);
             }
         }
     }
