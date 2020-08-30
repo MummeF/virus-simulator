@@ -1,6 +1,7 @@
 package Gui.Settings.graph;
 
 import lombok.Getter;
+import process.ConfigLib;
 import process.time.TimeValue;
 
 import javax.swing.*;
@@ -79,7 +80,17 @@ public class GraphPanel extends JPanel {
                     int height = this.getHeight() - 20 - y;
                     g2d.fillRect(x, y, width, height);
                 }
+                g2d.setColor(Color.BLACK);
+                int index = 0;
+                if (RELATIVE_NUMBER > scrollPosition) {
+                    index = infected.size() < RELATIVE_NUMBER ? infected.size() - 1 : RELATIVE_NUMBER;
+                } else {
+                    index = scrollPosition - 1;
+                }
+                g2d.drawString(infected.get(index).getTime() + " " + ConfigLib.TIME_UNIT.getShortName(),
+                        this.getWidth() - 30, this.getHeight() - 22);
             }
+
         } else {
             g2d.setColor(Color.BLACK);
             if (!deads.isEmpty()) {
@@ -122,6 +133,9 @@ public class GraphPanel extends JPanel {
                         translateX(infected.get(infected.size() - 1).getTime()),
                         translateY(infected.get(infected.size() - 1).getValue())
                 );
+                g2d.setColor(Color.BLACK);
+                g2d.drawString(infected.get(infected.size() - 1).getTime() + " " + ConfigLib.TIME_UNIT.getShortName(),
+                        translateX(infected.get(infected.size() - 1).getTime()) - 5, this.getHeight() - 2);
             }
         }
     }
