@@ -7,11 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.List;
 
@@ -38,7 +35,9 @@ public class MapPanel extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 Point endPoint = e.getPoint();
-                Simulation.addBorders(findBorders(startPoint, endPoint), borderTime);
+                if(Simulation.borderSettingAllowed()) {
+                    Simulation.addBorders(findBorders(startPoint, endPoint), borderTime);
+                }
                 repaint();
             }
 
@@ -102,8 +101,16 @@ public class MapPanel extends JPanel {
     }
 
     private void paintBorder(Border border, Graphics g) {
-        g.drawLine(border.getX1() * fieldWidth, border.getY1() * fieldHeight,
-                border.getX2() * fieldWidth, border.getY2() * fieldHeight);
+        if (border.getX1() == border.getX2()) {
+            //horizontal
+            g.drawLine(border.getX1() * fieldWidth, border.getY2() * fieldHeight,
+                    (border.getX1() + 1) * fieldWidth, border.getY2() * fieldHeight);
+        } else {
+            //vertical
+            g.drawLine( (border.getX1() +1)* fieldWidth, border.getY1() * fieldHeight,
+                    (border.getX1() +1) * fieldWidth, (border.getY1() + 1) * fieldHeight);
+        }
+
     }
 
 
@@ -131,21 +138,22 @@ public class MapPanel extends JPanel {
         int endX = (int) endField.getX();
         int endY = (int) endField.getY();
         if (startX <= endX && startX != MAX_X - 1) {
-            for (; startX <= endX; startX++) {
-                borders.add(new Border(startX, startY, startX + 1, startY, borderTime));
+            for (; startX <=  endX; startX++) {
+                borders.add(new Border(startX, startX, startY, startY + 1, borderTime));
             }
+            startX --;
         } else {
-            for (; startX > endX; startX--) {
-                borders.add(new Border(startX, startY, startX - 1, startY, borderTime));
+            for (; startX >= endX; startX--) {
+                borders.add(new Border(startX, startX, startY, startY + 1, borderTime));
             }
         }
         if (startY <= endY && startY != MAX_Y - 1) {
             for (; startY <= endY; startY++) {
-                borders.add(new Border(startX, startY, startX, startY + 1, borderTime));
+                borders.add(new Border(startX, startX + 1, startY +1 , startY + 1, borderTime));
             }
         } else {
-            for (; startY > endY; startY--) {
-                borders.add(new Border(startX, startY, startX, startY - 1, borderTime));
+            for (; startY >= endY; startY--) {
+                borders.add(new Border(startX, startX + 1, startY, startY, borderTime));
             }
         }
         return borders;

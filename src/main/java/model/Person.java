@@ -87,7 +87,6 @@ public class Person {
                         this.infected = false;
                         this.immune = false;
                         this.alive = false;
-                        System.out.println(this.toString() + " ist gestorben!!!!!!!!!!!!!!!!!!!!!!!");
                     }
                 }
             }

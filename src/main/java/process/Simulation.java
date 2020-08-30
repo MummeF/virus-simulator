@@ -36,6 +36,9 @@ public class Simulation {
     private static boolean paused = false;
     @Getter
     private static boolean finished = false;
+
+    private static boolean initialized = false;
+
     @Getter
     private static AtomicBoolean systemRunning;
 
@@ -44,6 +47,10 @@ public class Simulation {
 
     public static void pause() {
         paused = true;
+    }
+
+    public static boolean borderSettingAllowed(){
+        return (!systemRunning.get() && initialized);
     }
 
     public static void init() {
@@ -57,6 +64,7 @@ public class Simulation {
         systemRunning = new AtomicBoolean(false);
         paused = false;
         finished = false;
+        initialized = true;
         SwingUtilities.invokeLater(() -> gui.updateSimulation());
     }
 
@@ -182,9 +190,10 @@ public class Simulation {
     }
 
     private static boolean moveAllowed(int fromX, int fromY, int toX, int toY) {
-        return !borders.stream().anyMatch(border ->
-                (border.getX1() == fromX && border.getY1() == fromY && border.getX2() == toX && border.getY2() == toY)
-                        || (border.getX1() == toX && border.getY1() == toY && border.getX2() == fromX && border.getY2() == fromY));
+        if(borders.isEmpty()){
+            return true;
+        }
+        return !borders.stream().anyMatch(border -> border.blocks(fromX, fromY, toX, toY));
     }
 
     private static void moveAllPersons() {
@@ -246,6 +255,7 @@ public class Simulation {
                         systemRunning.set(false);
                         paused = false;
                         finished = true;
+                        initialized = false;
                         gui.updateSimulation();
                     }
                 }

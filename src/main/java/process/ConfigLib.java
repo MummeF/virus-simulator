@@ -19,7 +19,7 @@ public class ConfigLib {
     public static int RISK_AGE = 65;
     public static double LETHALITY = 0.05;
     public static double LETHALITY_PLUS_FOR_RISK_AGE = 0.5;
-    public static double PROBABILITY_OF_INFECTION_ON_FIELD = 0.5;
+    public static double PROBABILITY_OF_INFECTION_ON_FIELD = 0.15;
     public static long INCUBATION_TIME = 10;
     public static long ILLNESS_DURATION = 5;
 
