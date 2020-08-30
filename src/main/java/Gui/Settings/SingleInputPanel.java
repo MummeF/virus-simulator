@@ -20,11 +20,12 @@ public class SingleInputPanel extends JPanel {
 
 
     private String handledValue;
+    private JLabel description;
 
     public SingleInputPanel(int width, int height, String handledValue, String descriptionText) {
         this.handledValue = handledValue;
         this.setPreferredSize(new Dimension(width, height));
-        JLabel description = new JLabel(descriptionText, SwingConstants.RIGHT);
+        description = new JLabel(descriptionText, SwingConstants.RIGHT);
         description.setFont(new Font(description.getFont().getName(), Font.PLAIN, description.getFont().getSize()));
         this.addComponent(description, width / 4 * 3 - 10, height);
         if (handledValue.contains("bool")) {
@@ -180,6 +181,7 @@ public class SingleInputPanel extends JPanel {
             this.addComponent(spinner, width / 4 - 10, height);
         }
     }
+
 
     private void addComponent(Component component, int width, int height) {
         component.setPreferredSize(new Dimension(width, height));
