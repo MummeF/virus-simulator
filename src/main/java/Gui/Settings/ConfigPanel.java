@@ -10,7 +10,7 @@ import java.awt.event.MouseListener;
 
 public class ConfigPanel extends JPanel {
     private JButton startStopButton, resetButton;
-    private JLabel field, virus, system;
+    private JLabel field, virus, system, borderHint;
     private SingleInputPanel size, mobility, direction, population, riskAge, lethality, lethalityPlusForRiskage,
             incubationTime, illnessTime, infection, animatedMove, timeSpeed, timeSpeedStep, timeUnit;
 
@@ -89,6 +89,9 @@ public class ConfigPanel extends JPanel {
         this.addComponent(startStopButton, width / 2, 20);
         this.addComponent(resetButton, width / 4, 20);
         resetButton.setVisible(false);
+        borderHint = new JLabel("Für Barrieren mit der Maus auf dem Feld klicken und ziehen.", SwingConstants.LEFT);
+        borderHint.setFont(new Font(borderHint.getFont().getName(), Font.ITALIC, borderHint.getFont().getSize()));
+        this.addComponent(borderHint, width, 20);
         field = new JLabel("Bewegung und Bevölkerung", SwingConstants.LEFT);
         field.setFont(new Font(field.getFont().getName(), Font.BOLD, field.getFont().getSize()));
         this.addComponent(field, width, 20);
@@ -152,11 +155,13 @@ public class ConfigPanel extends JPanel {
                 startStopButton.setVisible(true);
                 startStopButton.setPreferredSize(new Dimension(this.getWidth() / 4, 20));
                 resetButton.setVisible(true);
+                borderHint.setVisible(true);
             } else {
                 startStopButton.setText("Pause");
                 startStopButton.setVisible(true);
                 startStopButton.setPreferredSize(new Dimension(this.getWidth() / 2, 20));
                 resetButton.setVisible(false);
+                borderHint.setVisible(false);
             }
             startStopButton.setVisible(true);
             size.setVisible(false);
@@ -177,7 +182,10 @@ public class ConfigPanel extends JPanel {
             startStopButton.setVisible(true);
             startStopButton.setPreferredSize(new Dimension(this.getWidth() / 2, 20));
             resetButton.setVisible(false);
+            borderHint.setVisible(true);
             if (Simulation.isFinished()) {
+
+                borderHint.setVisible(false);
                 startStopButton.setText("Simulation zurücksetzen");
                 startStopButton.setVisible(true);
                 size.setVisible(false);
